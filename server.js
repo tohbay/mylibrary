@@ -3,8 +3,11 @@ const mongoose = require('mongoose')
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
 
-// const { MONGODB } = require('./config')
+if (process.env.NODE_ENV === 'production') {
 const MONGODB = process.env.MONGODB
+}
+
+const {MONGODB} = require('./config')
 const indexRoutes = require('./routes/');
 
 app.set('view engine', 'ejs');
