@@ -1,14 +1,19 @@
 const express = require('express');
+const dotenv = require('dotenv')
 const mongoose = require('mongoose')
+
+dotenv.config();
+
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
 
+// const { MONGODB } = require('./config')
+// if (process.env.NODE_ENV === 'production') {
+// const MONGODB = process.env.MONGODB
+// }
 
-if (process.env.NODE_ENV === 'production') {
 const MONGODB = process.env.MONGODB
-}
-
-const {MONGODB} = require('./config')
+// const {MONGODB} = require('./config')
 const indexRoutes = require('./routes/');
 
 app.set('view engine', 'ejs');
@@ -18,7 +23,7 @@ app.use(expressLayouts);
 app.use(express.static('public'));
 
 mongoose.set("useUnifiedTopology", true);
-mongoose.connect(MONGODB, { useNewUrlParser: true });
+mongoose.connect(`${MONGODB}`, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on('error', error => console.error(error))
 db.once('open', () => console.log('Connected to MongoDb'))
